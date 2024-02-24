@@ -36,7 +36,9 @@
                         </div>
                         <div class="flex justify-between">
                             <div class="inline-block align-bottom mr-5">
+                               <a href="{{ url('/profileUser/'.$data->id)}}">
                                 <h1 class="font-bold text-2xl">{{$data->namalengkap}}</h1>
+                                </a>
                                 <h2>{{$data->alamat}}</h2>
                             </div>
                             <div class="inline-block align-bottom">
@@ -50,16 +52,6 @@
                                         <p class="font-bold">{{$like}}</p>
                                     </button>
                                 </form>
-
-                                {{-- <form action="{{ route('unlike') }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="fotoID" value="{{ $dataImage->fotoID }}">
-                                    <button type="submit" class="flex justify-center items-center gap-2">
-                                   unlike
-                                    </button>
-                                </form> --}}
-
-
                             </div>
                         </div>
 
@@ -76,11 +68,9 @@
             @endguest
             </div>
             <section class="flex justify-center py-5 gap-5 antialiased">
-
                 @auth
                     @include('profile.komentar')
                 @endauth
-
                 <div class="container w-full overflow-y-auto flex flex-col  h-96">
                 @if ($komentar->count() > 0)
                     @foreach ($komentar as $Komentar)

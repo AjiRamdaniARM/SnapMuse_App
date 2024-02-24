@@ -31,6 +31,9 @@
     <source src="{{ asset('sound/notif.mp3') }}" type="audio/mpeg">
 </audio>
 @endif
+{{-- === akhir notifikasi === --}}
+
+
 <div class="container mx-auto px-10">
      {{-- === header === --}}
     <div class="banner w-full">
@@ -39,19 +42,23 @@
                 <div class="content-text flex flex-col gap-3">
                     <h1 class="text-4xl w-80 " style="font-family: 'Ubuntu', sans-serif;"><span class="text-red-500">Website Gallery,</span>  Browse the images you love on our website</h1>
                     <p>client comfort is our responsibility </p>
-                    <div class="grupsearch ">
-                    <form class="py-2">
-                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                </svg>
+                    {{-- === fitur search === --}}
+                    <div class="grupsearch">
+                        <form class="py-2"  action="{{ url('/search') }}" method="GET">
+                            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                    </svg>
+                                </div>
+                                <input type="text" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border rounded-lg  focus:ring-red-500 focus:border-red-500 bg-gray-700 border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500" name="search" placeholder="Search Image..." required>
+                                <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Search</button>
                             </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500" placeholder="Search Image..." required>
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Search</button>
-                        </div>
-                    </form>
+                        </form>
+
+
+                    {{-- === fitur search === --}}
 
                     </div>
                 </div>
@@ -100,14 +107,14 @@
         {{-- === data image === --}}
         @if ($dataImage->count() > 0)
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:px-10 px-4  py-5">
-
-    @foreach ( $dataImage as $image )
+    @foreach ( $dataImage as $images )
     <div>
-        {{-- <a href="{{ route('detail', ['fotoID' => $image->fotoID]) }}"> --}}
-            <a href="{{ url('/detailImage/'.$image->fotoID. '/'. $image->id)}}">
-        <img class="object-cover  w-[1080px] rounded-lg shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl" src="{{ asset('image/' . $image->lokasiFile) }}"  alt="{{$image->judulFoto}}"></a>
+        {{-- <a href="{{ route('detail', ['fotoID' => $images->fotoID]) }}"> --}}
+            <a href="{{ url('/detailImage/'.$images->fotoID. '/'. $images->id)}}">
+        <img class="object-cover  w-[1080px] rounded-lg shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl" src="{{ asset('image/' . $images->lokasiFile) }}"  alt="{{$images->judulFoto}}"></a>
     </div>
     @endforeach
+
 
 </div>
 @else

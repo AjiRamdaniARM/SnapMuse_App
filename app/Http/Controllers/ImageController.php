@@ -82,14 +82,4 @@ class ImageController extends Controller
         Likefoto::where('fotoID', $fotoID)->delete();
         return back()->with('delete', 'Image successfully deleted 😁');
     }
-
 }
-
-  // $foto = [
-            //     'fotoID' => $fotoID,
-            //     'judulFoto' => $request->judulFoto,
-            //     'deskripsiFoto' => $request->deskripsiFoto,
-            //     'categoryName' => $request->categoryID,
-            //     'id' => $request->id,
-            //     'lokasiFile' => $request->lokasiFile,
-            // ];

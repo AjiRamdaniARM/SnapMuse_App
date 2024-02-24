@@ -8,7 +8,7 @@
         <a href="/">
         <div class="logo flex items-center justify-center gap-5">
             <img src="{{asset('assets/image/logo.svg')}}" width="30" alt="logoPinterest" />
-            <h1 class="font-bold text-[15px]">WEBSITE IMAGE</h1>
+            <h1 class="font-bold text-[15px]">SnapMuse</h1>
         </div></a>
         <div class="lg:hidden">
             <button class="navbar-burger flex items-center text-red-600 p-3">

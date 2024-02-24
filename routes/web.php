@@ -1,27 +1,17 @@
 <?php
 
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UploadController;
-use App\Models\category;
-use App\Models\Foto;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    // === dapatkan data dari model ==  //
-    $user = User::all();
-    $category = category::all();
-    $dataImage = Foto::all();
-     // === menghitung data dari model == //
-    $column = count($dataImage);
-    $columnUser = count($user);
-    $columnCategory = count($category);
-    return view('home',compact('dataImage','category', 'column', 'columnUser','columnCategory'));
-});
+Route::get('/',[HomeController::class, 'home'])->name('home');
+Route::get ('/search',[HomeController::class, 'search'])->name('search');
+
 
 // === Dashboard == //
 Route::get('/dashboard', function () {
@@ -30,7 +20,7 @@ Route::get('/dashboard', function () {
 
 // === Detail Image == //
 Route::get('/detailImage/{fotoID}/{id}',[DetailController::class, 'index'])->name('detail');
-
+Route::get('/profileUser/{id}',[DetailController::class, 'profileUser'])->name('profileUser');
 Route::get('detailImage/{lokasiFile}', [DetailController::class, 'unduh'])->name('detailImage.unduh');
 
 

@@ -25,8 +25,20 @@ class DetailController extends Controller
         $komentar = Komentarfoto::where('fotoID', $fotoID)->get();
         $userIds = $komentar->pluck('id')->toArray();
         $users = User::whereIn('id', $userIds)->get();
-        $like = Likefoto::where('fotoID', $fotoID)->count();
+        $like =  Likefoto::where('fotoID', $fotoID)->count();;
         return view('detailImage',['user' => $request->user()],compact('dataImage', 'data', 'komentar', 'dataUser', 'users', 'like'));
+    }
+    public function profileUser($id) {
+        $data = User::where('id', $id)->first();
+        $dataImage = Foto::where('id', $id)->get();
+        $like = Likefoto::where('id', $id)->get();
+        $imageID = $dataImage->pluck('fotoID');
+        $komentar = Komentarfoto::where('id', $id)->get()->count();
+        // === jumlah === //
+        $jmlhData = count($dataImage);
+        $jumlahlike = Likefoto::whereIn('fotoID', $imageID)->count();
+        $jumlahkomen = Komentarfoto::whereIn('fotoID', $imageID)->count();
+        return view('profile.profileUser', compact('dataImage','data', 'jumlahkomen','jmlhData', 'jumlahlike'));
     }
 
     // === validasi komentar foto === //
