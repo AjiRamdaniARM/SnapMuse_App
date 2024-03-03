@@ -1,33 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DETAIL IMAGE</title>
-</head>
-<body>
-    {{-- === navbar === --}}
-    @include('layouts.navbar');
-    {{-- === akhir navbar === --}}
-
-
+@extends('layouts.main')
+@section('content')
     <div class="container mx-auto px-10">
             <div class="w-full max-w-10xl rounded  bg-white shadow-xl p-10 lg:p-20 mx-auto text-gray-800 relative md:text-left">
                 <div class="md:flex items-center -mx-10">
                     <div class="w-full md:w-1/2 px-10 mb-10 md:mb-0">
                         <div class="relative">
                             <a href="{{ route('detailImage.unduh',$dataImage->lokasiFile) }}" target="_blank" class="z-10 absolute px-5 bg-red-500 text-white rounded-full py-2 mb-10 m-5 hover:bg-gray-400 shadow-md">Unduh Gambar</a>
-                            <img src="{{ asset('image/'.$dataImage->lokasiFile) }}" class="w-full rounded-xl z-1 relative z-1" alt="">
+                            <img src="{{ asset('image/'.$dataImage->lokasiFile) }}"  class="w-full rounded-xl z-1 relative z-1" alt="{{$dataImage->judulafoto}}">
                         </div>
                     </div>
 
                     <div class="w-full md:w-1/2 px-10 overflow-y-auto">
                         <div class="mb-10">
                             <div class="flex flex-col items-start">
-                                <div class="logo flex items-center justify-center gap-5 py-10">
-                                    <img src="{{asset('assets/image/logo.svg')}}" width="30" alt="logoPinterest" />
-                                    <h1 class="font-bold text-[15px]">WEBSITE IMAGE</h1>
+                                <div class="logo flex items-center justify-center  py-10">
+                                    <img src="{{asset('assets/image/logo.svg')}}" width="100" alt="logoPinterest" />
+                                    <h1 class="font-bold text-[20px]">SnapMuse</h1>
                                 </div>
                                 <h1 class="font-bold  text-4xl">{{ $dataImage->judulFoto }}</h1>
                                 <p class="text-1xl">{{ $dataImage->deskripsiFoto }}</p>
@@ -35,11 +23,17 @@
 
                         </div>
                         <div class="flex justify-between">
-                            <div class="inline-block align-bottom mr-5">
+                            <div class="flex gap-3 ">
+                                @if($data2)
+                                <img class="lg:w-12 lg:h-12 w-10 h-10 object-cover border-2 border-white rounded-full" src="{{asset('profilePoto/'.$data2->potoProfile)}}" alt="profile" id="output">
+                                @else
+                                <img class="lg:w-12 lg:h-12 w-10 h-10 object-cover border-2  border-white rounded-full" src="{{asset('assets/image/profile.webp')}}" alt="profile" id="output">
+                                @endif
+                                <div class="grup">
                                <a href="{{ url('/profileUser/'.$data->id)}}">
-                                <h1 class="font-bold text-2xl">{{$data->namalengkap}}</h1>
+                                <h1 class="font-bold lg:text-2xl hover:text-red-500">{{$data->namalengkap}}</h1>
                                 </a>
-                                <h2>{{$data->alamat}}</h2>
+                                <h2>{{$data->alamat}}</h2></div>
                             </div>
                             <div class="inline-block align-bottom">
                                   <!-- Menampilkan Tombol Like -->
@@ -67,19 +61,28 @@
               </div>
             @endguest
             </div>
-            <section class="flex justify-center py-5 gap-5 antialiased">
+            <section class="flex-col justify-center py-5 gap-5 antialiased">
                 @auth
                     @include('profile.komentar')
                 @endauth
                 <div class="container w-full overflow-y-auto flex flex-col  h-96">
                 @if ($komentar->count() > 0)
                     @foreach ($komentar as $Komentar)
-                        <div class="bg-gray-700 rounded-lg p-5 relative mb-5">
+                        <div class="bg-gray-700 rounded-e-xl rounded-es-xl p-5 relative mb-5">
                             @php
                                 $currentUser = $users->firstWhere('id', $Komentar->id);
+                                $currentPhoto = $photos->firstWhere('id', $Komentar->id);
                             @endphp
                             @if ($currentUser)
+                            <div class="user flex justify-start items-start gap-2 mb-2">
+                                @if ($currentPhoto )
+                                <img class="w-8 h-8 rounded-full" src="{{asset('profilePoto/'.$currentPhoto->potoProfile)}}" alt="Jese image">
+                                @else
+                                <img class="w-8 h-8 rounded-full" src=" {{asset('assets/image/profile.webp')}}" alt="Jese image">
+                                @endif
+
                                 <h1 class="font-bold relative mb-2 text-white">{{$currentUser->namalengkap}}</h1>
+                            </div>
                             @else
                                 <p class="font-bold relative mb-2 text-white">Unknown User</p>
                             @endif
@@ -89,7 +92,7 @@
                     @endforeach
                 @else
                 <div class="flex justify-center items-center">
-                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/eef10375-554b-4974-aa38-08e6b2c1d504/DvwLp66ccO.json" background="##ffffff" speed="1" style="width: 200px;" loop  autoplay direction="1" mode="normal"></lottie-player>
+                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/ac42fc75-af35-4af9-9929-d150c4a34519/RZfsSKaBiv.json" background="##ffffff" speed="1" style="width: 200px;" loop  autoplay direction="1" mode="normal"></lottie-player>
                     <div class="w-80 text-1xl"><span class="text-red-500">Belum ada komentar!</span>
                         @auth
                         Tambahkan satu untuk memulai percakapan.
@@ -104,13 +107,22 @@
 
 
 
-                </div>
+                </section>
             </section>
 
             <section class="py-5 container mx-auto flex flex-col justify-center items-center">
-                <h1 class="text-2xl">Lainnya untuk dijelajahi!!</h1>
+                <h1 class="text-2xl font-bold">Lainnya untuk dijelajahi!!</h1>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-10">
+                    @foreach ($rekomendasi as $rekomend )
+                    <a href="{{ url('/detailImage/'.$rekomend->fotoID. '/'. $rekomend->id)}}">
+                        <div class="grid gap-4">
+                            <div>
+                                <img class="w-full cursor-pointer image h-64 object-cover max-w-full rounded-lg" src="{{ asset('image/'.$rekomend->lokasiFile) }}" alt="">
+                            </div>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
             </section>
         </div>
-
-</body>
-</html>
+@endsection

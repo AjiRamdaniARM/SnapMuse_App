@@ -16,7 +16,7 @@ return new class extends Migration
                 $table->integer('fotoID');
                 $table->integer('id');
                 $table->text('isiKomentar');
-                $table->date('waktu');
+                $table->string('waktu');
                 $table->timestamps();
         });
     }

@@ -38,7 +38,7 @@
                                 <a href="{{ route('password.request') }}" class="text-end text-[12px] text-blue-500">Forgot Password ?</a>
                                 @endauth
                             </div>
-                            <div class="text-center text-[13px] ">Belum Punya Akun? &nbsp; <a href="/egister" class="text-blue-500 font-bold">Registrasi</a></div>
+                            <div class="text-center text-[13px] ">Belum Punya Akun? &nbsp; <a href="/register" class="text-blue-500 font-bold">Registrasi</a></div>
                             <br />
                         </div>
 

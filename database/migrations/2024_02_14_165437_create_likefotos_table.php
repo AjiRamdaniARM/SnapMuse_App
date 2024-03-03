@@ -15,7 +15,6 @@ return new class extends Migration
             $table->integer('likeID')->autoIncrement();
             $table->integer('fotoID');
             $table->integer('id');
-            $table->integer('jumlahLike');
             $table->timestamps();
         });
     }

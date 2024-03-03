@@ -15,25 +15,25 @@ class DatabaseSeeder extends Seeder
     {
         // insert table category
         DB::table('categories')->insert([
-            'categoryName' => 'makanan'
+            'categoryName' => 'food'
         ]);
         DB::table('categories')->insert([
-            'categoryName' => 'olahraga'
+            'categoryName' => 'sport'
         ]);
         DB::table('categories')->insert([
             'categoryName' => 'fashion'
         ]);
         DB::table('categories')->insert([
-            'categoryName' => 'hewan'
+            'categoryName' => 'animal'
         ]);
         DB::table('categories')->insert([
             'categoryName' => 'cars'
         ]);
         DB::table('categories')->insert([
-            'categoryName' => 'teknologi'
+            'categoryName' => 'teknology'
         ]);
         DB::table('categories')->insert([
-            'categoryName' => 'hutan'
+            'categoryName' => 'forest'
         ]);
         DB::table('categories')->insert([
             'categoryName' => 'aestethic'

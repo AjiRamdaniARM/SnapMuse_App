@@ -10,8 +10,11 @@
 
             <div class="md:w-3/12 md:ml-16">
               <!-- profile image -->
-              <img class="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
-                           border-2 border-pink-600 p-1" src="{{asset('assets/image/profile.webp')}}" alt="profile">
+              @if($photoProfile)
+              <img class="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1" src="{{asset('profilePoto/'.$photoProfile->potoProfile)}}" alt="profile">
+          @else
+          <img class="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1" src="{{asset('assets/image/profile.webp')}}" alt="profile">
+          @endif
             </div>
 
             <!-- profile meta -->

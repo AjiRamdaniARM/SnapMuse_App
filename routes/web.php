@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\apiController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
@@ -9,8 +10,16 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/about', function() {
+return view('about');
+
+});
+Route::get('/api', function() {
+return view('apipexels');
+});
 Route::get('/',[HomeController::class, 'home'])->name('home');
 Route::get ('/search',[HomeController::class, 'search'])->name('search');
+Route::get ('/category',[HomeController::class, 'category'])->name('category');
 
 
 // === Dashboard == //
@@ -20,7 +29,7 @@ Route::get('/dashboard', function () {
 
 // === Detail Image == //
 Route::get('/detailImage/{fotoID}/{id}',[DetailController::class, 'index'])->name('detail');
-Route::get('/profileUser/{id}',[DetailController::class, 'profileUser'])->name('profileUser');
+Route::get('/profileUser/{id}',[DetailController::class, 'profileUser'])->name('det');
 Route::get('detailImage/{lokasiFile}', [DetailController::class, 'unduh'])->name('detailImage.unduh');
 
 
@@ -33,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dataImage',[ImageController::class, 'index'])->name('image');
     Route::get('/upload', [UploadController::class, 'index'])->name('upload');
     Route::post('/upload', [UploadController::class, 'store']);
+    Route::post('/akun', [UploadController::class, 'potoProfile'])->name('profilePoto');
+    Route::delete('/akun/{profileId}', [UploadController::class, 'deletePotoProfile'])->name('deletePotoProfile.delete');
     Route::delete('dataImage/{fotoID}', [ImageController::class, 'delete'])->name('dataImage.delete');
     Route::get('detailImageEdit/{fotoID}/{id}', [ImageController::class, 'edit'])->name('edit');
     Route::post('dataImage/{fotoID}', [ImageController::class, 'update'])->name('dataImage.update');
@@ -41,6 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 
 // === Route Dari file auth == //

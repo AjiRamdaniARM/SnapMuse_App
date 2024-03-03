@@ -6,6 +6,7 @@ use App\Models\category;
 use App\Models\Foto;
 use App\Models\Komentarfoto;
 use App\Models\Likefoto;
+use App\Models\potoProfile;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -19,8 +20,9 @@ class ImageController extends Controller
         $user_id = Auth::id();
         // === Dapatkan data dari database berdasarkan ID pengguna yang sedang login === //
         $data = User::where('id', $user_id)->get();
-        $dataImage = Foto::where('id', $user_id)->get();
-        return view('profile.dataImage',['user' => $request->user()], compact('dataImage','data'));
+        $data2 = potoProfile::where('id', $user_id)->get();
+        $dataImage = Foto::where('id', $user_id)->orderBy('created_at', 'desc')->get();
+        return view('profile.dataImage',['user' => $request->user()], compact('dataImage','data', 'data2'));
     }
 
     public function edit($fotoID, $id , Request $request): View
@@ -36,8 +38,8 @@ class ImageController extends Controller
 
         public function update(Request $request, $fotoID) {
             $request->validate([
-                'judulFoto' => ['required'],
-                'deskripsiFoto' => ['required'],
+                'judulFoto' => ['required','min:3', 'max:50'],
+                'deskripsiFoto' => ['required','min:3', 'max:255'],
                 'categoryID' => ['required'],
                 'id' => ['required'],
 
@@ -46,14 +48,12 @@ class ImageController extends Controller
 
             if($request->hasFile('lokasiFile')) {
                 $request->validate([
-                    'lokasiFile' => ['required', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
+                'lokasiFile' => ['required', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
                 ]);
-
                 $foto_file = $request->file('lokasiFile');
                 $foto_ekstensi = $foto_file->extension();
                 $foto_nama = date('ymdhis') ."." . $foto_ekstensi;
                 $foto_file->move(public_path('image'), $foto_nama);
-
                 $data = Foto::where('fotoID',$fotoID)->first();
                 File::delete(public_path('image').'/'.$data->foto);
 
@@ -67,7 +67,6 @@ class ImageController extends Controller
             'id' => $request->id,
 
         ];
-
 
             Foto::where('fotoID',$fotoID)->update($data);
             return redirect('/dataImage')->with('update','Successfully edited the post 👌👌');

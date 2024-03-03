@@ -14,7 +14,7 @@
             $tz = 'Asia/Jakarta';
             $dt = new DateTime("now", new DateTimeZone($tz));
             $timestamp = $dt->format('G:i:s');
-            echo " $timestamp";
+            echo "$timestamp";
             ?></span>
         <img class="h-12 w-12 rounded-full" alt="John Doe's avatar"
             src="{{asset('assets/image/maskot.jpg')}}" />

@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Foto;
+use App\Models\Komentarfoto;
+use App\Models\Likefoto;
+use App\Models\potoProfile;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -23,9 +29,18 @@ class ProfileController extends Controller
 
     public function edit(Request $request): View
     {
+        $user_id = Auth::id();
+        $photoProfile = potoProfile::where('id', $user_id)->first();
+        // === Dapatkan data dari database berdasarkan ID pengguna yang sedang login === //
+        $data = User::where('id', $user_id)->get();
+        $dataImage = Foto::where('id', $user_id)->get();
+        $imageID = $dataImage->pluck('fotoID');
+        $jmlhData = count($dataImage);
+        $jumlahlike = Likefoto::whereIn('fotoID', $imageID)->count();
+        $jumlahkomen = Komentarfoto::whereIn('fotoID', $imageID)->count();
         return view('profile.profile', [
             'user' => $request->user(),
-        ]);
+        ], compact('dataImage', 'data','jmlhData', 'jumlahlike','jumlahkomen', 'photoProfile' ));
     }
 
     /**
@@ -54,14 +69,24 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-
+        $user_id = Auth::id();
         Auth::logout();
 
         $user->delete();
 
+        $data = Foto::where('id',$user_id)->first();
+        $data2 = potoProfile::where('id',$user_id)->first();
+        File::delete(public_path('image').'/'.$data->lokasiFile);
+        File::delete(public_path('profilePoto').'/'.$data2->potoProfile);
+        Foto::where('id', $user_id)->delete();
+        potoProfile::where('id', $user_id)->delete();
+        Komentarfoto::where('id', $user_id)->delete();
+        Likefoto::where('id', $user_id)->delete();
+
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return Redirect::to('/')->with('deleteaccout', 'your account has been deleted on our server!!');
     }
 }

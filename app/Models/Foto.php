@@ -11,5 +11,18 @@ class Foto extends Model
     protected $table = "fotos";
     protected $guarded = ['fotoID','update_at','crated_at'];
 
+    public function category()
+    {
+        return $this->belongsTo(category::class, 'categoryName');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+    public function Likefoto()
+    {
+        return $this->belongsTo(Likefoto::class, 'likeID');
+    }
+
     // protected $fillable = ['id_foto', 'nama', 'deskripsi', 'alamat', 'foto'];
 }
