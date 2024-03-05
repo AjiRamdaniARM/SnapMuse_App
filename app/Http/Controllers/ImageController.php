@@ -45,20 +45,19 @@ class ImageController extends Controller
 
             ]);
 
+        //     if($request->hasFile('lokasiFile')) {
+        //         $request->validate([
+        //         'lokasiFile' => ['required', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
+        //         ]);
+        //         $foto_file = $request->file('lokasiFile');
+        //         $foto_ekstensi = $foto_file->extension();
+        //         $foto_nama = date('ymdhis') ."." . $foto_ekstensi;
+        //         $foto_file->move(public_path('image'), $foto_nama);
+        //         $data = Foto::where('fotoID',$fotoID)->first();
+        //         File::delete(public_path('image').'/'.$data->foto);
 
-            if($request->hasFile('lokasiFile')) {
-                $request->validate([
-                'lokasiFile' => ['required', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
-                ]);
-                $foto_file = $request->file('lokasiFile');
-                $foto_ekstensi = $foto_file->extension();
-                $foto_nama = date('ymdhis') ."." . $foto_ekstensi;
-                $foto_file->move(public_path('image'), $foto_nama);
-                $data = Foto::where('fotoID',$fotoID)->first();
-                File::delete(public_path('image').'/'.$data->foto);
-
-                $data['lokasiFile'] = $foto_nama;
-        }
+        //         $data['lokasiFile'] = $foto_nama;
+        // }
 
         $data = [
             'judulFoto' => $request->judulFoto,

@@ -1,19 +1,41 @@
 @extends('layouts.main')
 @section('content')
 
+{{-- === modal pop up profile === --}}
+    <div id="popup-modal" tabindex="-1" class="hidden transition delay-75 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative">
+            <div class="relative">
+                <div class="p-4 md:p-5 text-center">
+                   @if($photoProfile)
+              <a data-modal-target="popup-modal" data-modal-toggle="popup-modal">
+              <img class="w-20 h-20 md:w-96 md:h-96 object-cover rounded-full border-2 border-pink-600 p-1" src="{{asset('profilePoto/'.$photoProfile->potoProfile)}}" alt="profile">
+            </a>
+          @else
+            <a data-modal-target="popup-modal" data-modal-toggle="popup-modal">
+                <img class="w-20 h-20 md:w-96 md:h-96 object-cover rounded-full border-2 border-pink-600 p-1" src="{{asset('assets/image/profile.webp')}}" alt="profile">
+            </a>
+          @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+{{-- === modal pop up profile === --}}
+
 <div class="container mx-auto">
     <main class="bg-gray-100 bg-opacity-25">
-
         <div class="lg:w-8/12 lg:mx-auto mb-8">
-
           <header class="flex flex-wrap items-center p-4 md:py-8">
-
             <div class="md:w-3/12 md:ml-16">
               <!-- profile image -->
               @if($photoProfile)
+              <a data-modal-target="popup-modal" data-modal-toggle="popup-modal">
               <img class="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1" src="{{asset('profilePoto/'.$photoProfile->potoProfile)}}" alt="profile">
+            </a>
           @else
-          <img class="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1" src="{{asset('assets/image/profile.webp')}}" alt="profile">
+            <a data-modal-target="popup-modal" data-modal-toggle="popup-modal">
+                <img class="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1" src="{{asset('assets/image/profile.webp')}}" alt="profile">
+            </a>
           @endif
             </div>
 

@@ -249,7 +249,7 @@
                            <h1 class="text-red-500 font-medium">website image 😍</h1>
                    </div>
                    <h1 class="text-j-banner text-4xl lg:text-5xl 2xl:text-[4em] lg:w-[9em] tracking-normal ">Find Your Inspiration On The SnapMuse <span class="text-red-400"> Website</span></h1>
-                   <p class="text-p-banner lg:w-96">Our job is to filling your tummy with delicious food and  with fast and free delivery </p>
+                   <p class="text-p-banner lg:w-96">we provide a variety of images from all accounts on our website, let's join </p>
 
                    {{-- === fitur search === --}}
                    <div class="grupsearch lg:flex  lg:items-center gap-4">
@@ -307,7 +307,7 @@
        </div>
        <div class="container py-5">
         @if ($dataImage->count() > 0)
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 py-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-5">
            @foreach ( $dataImage as $images )
            <a href="{{ url('/detailImage/'.$images->fotoID. '/'. $images->id)}}" class="transform transition duration-500 hover:scale-105 hover:shadow-2xl">
            <label for="file" class="relative cursor-pointer ">
@@ -320,9 +320,7 @@
             </span>
         </label>
     </a>
-            {{-- <a href="{{ url('/detailImage/'.$images->fotoID. '/'. $images->id)}}" class="block">
-                <img class="h-full object-cover max-w-full rounded-lg shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl" src="{{ asset('image/' . $images->lokasiFile) }}" alt="{{$images->judulFoto}}">
-            </a> --}}
+
            @endforeach
 
 

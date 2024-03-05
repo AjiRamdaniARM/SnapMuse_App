@@ -95,7 +95,7 @@
 @endif
 
 {{-- === akhir notfikasi saat berhasil  --}}
-<div class="container mx-auto px-10 flex flex-wrap gap-5">
+<div class="container mx-auto px-10 flex flex-wrap justify-center items-start gap-5">
 @if ($dataImage->count() > 0)
   @foreach($dataImage as $image)
   <div id="default-modal-{{$image->fotoID}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -113,6 +113,7 @@
         </div>
     </div>
 </div>
+
     <div class="max-w-xs container bg-white rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl">
 
             <div class="px-3 w-full">

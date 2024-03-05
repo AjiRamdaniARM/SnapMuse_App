@@ -1,10 +1,12 @@
 @extends('layouts.main')
 @section('content')
+
+{{-- === modal pop up photo profile === --}}
     <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative">
             <div class="relative">
                 @if($photoProfile)
-                        <img class="w-96 h-96 border-4 border-white rounded-full" src="{{asset('profilePoto/'.$photoProfile->potoProfile)}}" alt="profile" id="output">
+                        <img class="w-96 h-96 border-4 border-white rounded-full" src="{{asset('profilePoto/'.$photoProfile->potoProfile)}}" alt="profile" >
                         <form  action="{{ route('deletePotoProfile.delete',$photoProfile->profileId)}}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -13,16 +15,44 @@
                         </button>
                         </form>
             @else
-                        <img class="w-40 h-40 border-4 border-white rounded-full" src="{{asset('assets/image/profile.webp')}}" alt="profile" id="output">
+                        <img class="w-40 h-40 border-4 border-white rounded-full" src="{{asset('assets/image/profile.webp')}}" alt="profile" >
             @endif
-            
             </div>
-         
-        
         </div>
-        
     </div>
-    
+{{-- === akhir modal pop up photo profile === --}}
+
+{{-- === notfikasi saat edit Profile  --}}
+@if (session()->has('akunUp'))
+<div class="z-10 fixed right-0  bottom-0 mr-5 mb-5 sm:mr-6 sm:mb-6">
+    <div class="notification animate-slide-in transition-all duration-500 ease-in-out p-4 bg-white rounded-lg shadow-xl mx-auto max-w-sm relative m-10">
+        <div class="absolute -top-1 right-0">
+        <span class="relative flex h-5 w-5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-5 w-5 bg-red-500"></span>
+          </span>
+        </div>
+        <div class="flex items-center">
+        <span class="text-xs font-semibold uppercase m-1 py-1 mr-3 text-gray-500 absolute bottom-0 right-0"><?php
+            $tz = 'Asia/Jakarta';
+            $dt = new DateTime("now", new DateTimeZone($tz));
+            $timestamp = $dt->format('G:i:s');
+            echo " $timestamp";
+            ?></span>
+        <img class="h-12 w-12 rounded-full" alt="John Doe's avatar"
+            src="{{asset('assets/image/maskot.jpg')}}" />
+        <div class="relative ml-5 mb-2">
+            <h4 class="text-lg font-semibold leading-tight text-gray-900">There is a notification !!!</h4>
+            <p class="text-sm text-gray-600">{{session('akunUp')}}</p>
+        </div>
+    </div>
+    </div>
+</div>
+<audio id="notificationSound">
+    <source src="{{ asset('sound/notif.mp3') }}" type="audio/mpeg">
+</audio>
+@endif
+
 <div class="container px-10 mx-auto">
     <div class="bg-white rounded-lg shadow-xl pb-8">
         <div class="w-full h-[250px]">
@@ -33,7 +63,7 @@
         @if($photoProfile)
             <a data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
                 <label for="file" class="relative cursor-pointer">
-                    <img class="w-40 h-40 object-cover  border-4 border-white rounded-full" src="{{asset('profilePoto/'.$photoProfile->potoProfile)}}" alt="profile" id="output">
+                    <img id="output" class="w-40 h-40 object-cover   border-4 border-white rounded-full" src="{{asset('profilePoto/'.$photoProfile->potoProfile)}}" alt="profile">
                     <span class="absolute inset-0 flex items-center justify-center text-white opacity-0  rounded-full hover:opacity-100 transition duration-300 bg-black bg-opacity-50">
                        View Profile
                     </span>
@@ -46,7 +76,7 @@
                 <input type="text" id="id"  name="id" value="{{$user->id}}" hidden>
                 <label for="file" class="relative cursor-pointer">
                     <input id="file" name="potoProfile"  class="opacity-0 w-40 h-40 absolute inset-0 " type="file" name="potoProfile" onchange="uploadImage(event)"/>
-                    <img class="w-40 h-40 border-4 border-white rounded-full" src="{{asset('assets/image/profile.webp')}}" alt="profile" id="output">
+                    <img class="w-40 h-40 border-4 border-white rounded-full" id="output" src="{{asset('assets/image/profile.webp')}}" alt="profile" >
                     <span class="absolute inset-0 flex items-center justify-center text-white opacity-0  rounded-full hover:opacity-100 transition duration-300 bg-black bg-opacity-50">
                         Upload Image
                     </span>
@@ -74,8 +104,9 @@
                   <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{{$jumlahkomen}}</span><span class="text-sm text-blueGray-400">Comment</span>
                 </div>
               </div>
-
         </div>
+
+        {{-- === button delete account === --}}
         <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div class="flex items-center space-x-4 mt-2">
                 <x-danger-button
@@ -91,26 +122,41 @@
         </div>
     </div>
 
+    {{-- === personal info === --}}
     <div class="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
         <div class="w-full flex flex-col 2xl:w-1/3">
             <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-                <h4 class="text-xl text-gray-900 font-bold">Personal Info</h4>
+                <h4 class="text-xl text-gray-900 font-bold">Edit User Account</h4>
+
                 <ul class="mt-2 text-gray-700">
+                    <form  method="POST" action="{{ route('user.editUser') }}">
+                        @csrf
                     <li class="flex border-y py-2">
                         <span class="font-bold w-24">Full name:</span>
-                        <span class="text-gray-700">{{$user->namalengkap}}</span>
+                        <input class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none w-full focus:ring-red-500" name="namalengkap"  type="text" id="namalengkap" value="{{$user->namalengkap}}" required >
                     </li>
                     <li class="flex border-b py-2">
                         <span class="font-bold w-24">Email:</span>
-                        <span class="text-gray-700">{{$user->email}}</span>
+                        <input class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none w-full focus:ring-red-500" name="email"  type="email" id="email" value="{{$user->email}}" required >
                     </li>
                     <li class="flex border-b py-2">
                         <span class="font-bold w-24">Location:</span>
-                        <span class="text-gray-700">{{$user->alamat}}</span>
+                        <input class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none w-full focus:ring-red-500" name="alamat"  type="text" id="alamat" value="{{$user->alamat}}" required >
                     </li>
                     <li class="flex border-b py-2">
                         <span class="font-bold w-24">Date Account:</span>
                         <span class="text-gray-700">{{$user->created_at}}</span>
+                    </li>
+                    <li class="flex border-b py-2">
+
+                            <button type="submit" class="font-bold bg-red-500 text-white rounded-full px-10 py-4">Edit Profile</button>
+
+                    </li>
+                    </form>
+                    <li class="flex border-b py-2">
+                        <div class="max-w-xl">
+                            @include('profile.partials.update-password-form')
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -158,14 +204,16 @@
 
 {{-- === SISTEM JS  === --}}
 <script>
-        function uploadImage() {
-            var image = document.getElementById("output");
+
+        function uploadImage(event) {
             var formData = new FormData();
+            var image = document.getElementById("output");
+            image.src = URL.createObjectURL(event.target.files[0]);
             var fileInput = event.target;
             var fileInput = document.getElementById('file');
             var userIdInput = document.getElementById('id');
 
-            image.src = URL.createObjectURL( fileInput.files[0]);
+
             formData.append('potoProfile', fileInput.files[0]);
             formData.append('id', userIdInput.value);
             formData.append('_token', '{{ csrf_token() }}');
@@ -189,3 +237,12 @@
 </script>
 
 
+<script>
+    //  ===  Memainkan suara saat notifikasi muncul === //
+    document.addEventListener('DOMContentLoaded', function () {
+        var notificationSound = document.getElementById('notificationSound');
+        if (notificationSound) {
+            notificationSound.play();
+        }
+    });
+ </script>

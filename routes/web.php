@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\apiController;
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
@@ -48,7 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::get('detailImageEdit/{fotoID}/{id}', [ImageController::class, 'edit'])->name('edit');
     Route::post('dataImage/{fotoID}', [ImageController::class, 'update'])->name('dataImage.update');
     // === Route profile == //
-    Route::get('/akun', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/editUser', [ProfileController::class, 'editUser'])->name('user.editUser');
+
+    Route::get('/akun', [ProfileController::class, 'akun'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

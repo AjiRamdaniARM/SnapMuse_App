@@ -15,13 +15,13 @@ class UpdateSeeder extends Seeder
     {
         // insert table category
         DB::table('categories')->insert([
-            'categoryName' => 'anime'
+            'categoryName' => 'game'
         ]);
         DB::table('categories')->insert([
-            'categoryName' => 'art'
+            'categoryName' => 'building'
         ]);
         DB::table('categories')->insert([
-            'categoryName' => 'arsitek'
+            'categoryName' => 'travel'
         ]);
     }
 }

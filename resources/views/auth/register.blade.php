@@ -1,7 +1,7 @@
 <x-guest-layout>
 
 
-    <div class="container mx-auto py-20">
+    <div class="container mx-auto py-10">
         <div class="flex flex-wrap justify-center items-center gap-20">
         {{-- image --}}
         <div class="grup">
@@ -17,14 +17,14 @@
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                       <x-input-label for="username" :value="__('Username')" />
-                      <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+                      <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" placeholder="cth: robotosnap " required autofocus autocomplete="username" />
                       <x-input-error :messages="$errors->get('username')" class="mt-2" />
                     </div>
 
 
                     <div class="w-full md:w-1/2 px-3">
-                      <x-input-label for="namalengkap" :value="__('NamaLengkap')" />
-                      <x-text-input id="namalengkap" class="block mt-1 w-full" type="text" name="namalengkap" :value="old('namalengkap')" required autofocus autocomplete="namalengkap" />
+                      <x-input-label for="namalengkap" :value="__('Full Name')" />
+                      <x-text-input id="namalengkap" class="block mt-1 w-full" type="text" name="namalengkap" :value="old('namalengkap')" placeholder="cth: Roboto Snap " required autofocus autocomplete="namalengkap" />
                       <x-input-error :messages="$errors->get('namalengkap')" class="mt-2" />
                   </div>
                 </div>
@@ -43,7 +43,7 @@
 
                       <div class="w-full md:w-1/2 px-3">
                         <x-input-label for="email" :value="__('Email')" />
-                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" placeholder="cth: roboto@gmail.com " required autocomplete="username" />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                       </div>
 
@@ -61,8 +61,8 @@
                       </div>
 
                       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <x-input-label for="namalengkap" :value="__('Alamat')" />
-                        <x-text-input id="alamat" class="block mt-1 w-full" type="text" name="alamat" :value="old('alamat')" required autofocus autocomplete="alamat" />
+                        <x-input-label for="namalengkap" :value="__('Home Address')" />
+                        <x-text-input id="alamat" class="block mt-1 w-full" type="text" name="alamat" :value="old('alamat')" placeholder="cth: Sukabumi,Jawa Barat" required autofocus autocomplete="alamat" />
                         <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
                     </div>
 
@@ -82,7 +82,7 @@
                         <input type="checkbox" class="rounded-lg" name="remember" id="remember">
                         <div>Remember Me</div>
                     </div>
-                    <div class="text-center text-[12px] lg:text-[13px]"> Punya Akun? &nbsp; <a href="/login" class="text-blue-500 font-bold">Login</a></div>
+                    <div class="text-center text-[12px] lg:text-[13px]"> Have an account? &nbsp; <a href="/login" class="text-blue-500 font-bold">Login</a></div>
                 </div>
 
             </form>

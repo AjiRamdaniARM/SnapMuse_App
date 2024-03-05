@@ -1,4 +1,3 @@
-
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
         <!-- Fonts -->
@@ -30,7 +29,7 @@
             </li>
             @auth
             <li>
-                <a href="{{route('image')}}" class="hover:font-bold" >Dashbord</a>
+                <a href="{{route('image')}}" class="hover:font-bold" >Dashboard</a>
             </li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -74,7 +73,7 @@
 
 				<ul>
 					<li class="mb-1">
-						<a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-red-600 rounded" href="/">Gelery</a>
+						<a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-red-600 rounded" href="/">Gellery</a>
 					</li>
 					<li class="mb-1">
 						<a href="/api" class="block p-4 text-sm font-semibold text-gray-400 hover:bg-red-50 hover:text-red-600 rounded">

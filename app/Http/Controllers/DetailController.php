@@ -24,14 +24,22 @@ class DetailController extends Controller
         $data = User::where('id', $id)->first();
         $data2 = potoProfile::where('id', $id)->first();
         $dataImage = Foto::where('fotoID', $fotoID)->first();
-        $rekomendasiGet = $dataImage->pluck('categoryName')->toArray(); // Convert to array
-        $rekomendasi = Foto::where('categoryName', $rekomendasiGet)->get();
-        $komentar = Komentarfoto::where('fotoID', $fotoID)->get();
+        $dataImagee = Foto::where('fotoID', $fotoID)->get();
+        $rekomendasiGet = $dataImagee->pluck('categoryName')->toArray();
+        $rekomendasi = Foto::whereIn('categoryName', $rekomendasiGet)->get()->shuffle();
+
+        $komentar = Komentarfoto::where('fotoID', $fotoID)->orderBy('created_at', 'desc')->get();
         $userIds = $komentar->pluck('id')->toArray();
         $users = User::whereIn('id', $userIds)->get();
         $photos = potoProfile::whereIn('id', $userIds)->get();
+
+        $likeGet = Likefoto::where('fotoID', $fotoID)->get();
+        $userFoto = $likeGet->pluck('id')->toArray();
+        $likeView = User::whereIn('id', $userFoto)->get();
+        $photosLike = potoProfile::whereIn('id', $userFoto)->get();
+
         $like =  Likefoto::where('fotoID', $fotoID)->count();
-        return view('detailImage',['user' => $request->user()],compact('dataImage', 'data', 'komentar', 'dataUser', 'users', 'like' , 'rekomendasi', 'photos', 'data2'));
+        return view('detailImage',['user' => $request->user()],compact('dataImage', 'data', 'komentar', 'dataUser', 'users', 'like','likeView' , 'rekomendasi', 'photos', 'data2' , 'likeGet', 'photosLike'));
     }
     public function profileUser($id) {
         $data = User::where('id', $id)->first();
@@ -68,28 +76,35 @@ class DetailController extends Controller
     }
 
     // === validasi like dan unlike === //
-    public function like(Request $request): RedirectResponse
+    public function like(Request $request)
     {
 
-        $user_id = Auth::id();
-        $fotoID = $request->input('fotoID');
+            // Mendapatkan user ID yang sedang login
+    $user_id = Auth::id();
 
-        $like = Likefoto::where('fotoID', $fotoID)->where('id', $user_id)->first();
+    // Mendapatkan fotoID dari permintaan
+    $fotoID = $request->input('fotoID');
 
-        if (!$like) {
+    // Mencari apakah user ini sudah melakukan like pada foto tersebut
+    $like = Likefoto::where('fotoID', $fotoID)->where('id', $user_id)->first();
 
-            Likefoto::create([
-                'fotoID' => $fotoID,
-                'id' => $user_id,
-            ]);
+    // Jika user belum melakukan like, maka tambahkan like
+    if (!$like) {
+        Likefoto::create([
+            'fotoID' => $fotoID,
+            'id' => $user_id,
+        ]);
+    } else {
+        // Jika user telah melakukan like, hapus like
+        Likefoto::where('fotoID', $fotoID)->where('id', $user_id)->delete();
+    }
 
-        }else{
-            $fotoID = $request->input('fotoID');
-            $user_id = Auth::id();
-            Likefoto::where('fotoID', $fotoID)->where('id', $user_id)->delete();
-        };
+    // Setelah menangani like, Anda bisa merespon dengan jumlah like yang baru
+    $likeCount = Likefoto::where('fotoID', $fotoID)->count();
 
-        return back();
+    // Kembalikan respons dalam bentuk JSON dengan jumlah "like" yang baru
+    return response()->json(['likeCount' => $likeCount]);
+
     }
 
     // === Fitur Unduh Gambar  === //

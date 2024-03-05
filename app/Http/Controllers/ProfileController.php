@@ -27,7 +27,8 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function edit(Request $request): View
+
+    public function akun(Request $request): View
     {
         $user_id = Auth::id();
         $photoProfile = potoProfile::where('id', $user_id)->first();
@@ -41,6 +42,24 @@ class ProfileController extends Controller
         return view('profile.profile', [
             'user' => $request->user(),
         ], compact('dataImage', 'data','jmlhData', 'jumlahlike','jumlahkomen', 'photoProfile' ));
+    }
+
+    public function editUser(Request $request) {
+        $request->validate([
+            'namalengkap' => ['required'],
+            'email' => ['required'],
+            'alamat' => ['required'],
+
+        ]);
+        $user_id = Auth::id();
+        $data = [
+            'namalengkap' => $request->namalengkap,
+            'email' => $request->email,
+            'alamat' => $request->alamat,
+        ];
+
+        User::where('id',$user_id)->update($data);
+        return redirect('/akun')->with('akunUp','Successfully edited the profile 👌👌');
     }
 
     /**
