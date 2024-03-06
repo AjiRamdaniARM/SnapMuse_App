@@ -6,7 +6,7 @@
                     <div class="image-login p-48 px-40 lg:p-64 rounded-xl" aria-label="CyberPunk"></div>
                 </div>
                 <div class="form">
-                    <h1 class="font-bold text-4xl lg:text-5xl text-start login py-5" >Welcome Back</h1>
+                    <h1 class="font-bold text-4xl lg:text-5xl text-start login py-5" >login</h1>
                     <x-auth-session-status class="mb-4" :status="session('status')" />
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

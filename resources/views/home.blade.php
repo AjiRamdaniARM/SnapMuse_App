@@ -314,7 +314,7 @@
             <img class="h-full max-w-full object-cover shadow-lg border-white rounded-lg " src="{{ asset('image/' . $images->lokasiFile) }}" alt="{{$images->judulFoto}}" >
             <span class="absolute inset-0 flex items-center justify-center text-white opacity-0 rounded-lg  hover:opacity-100 transition duration-300 bg-black bg-opacity-50">
                 <div class="absolute bottom-0 left-0 w-full flex justify-between rounded-lg bg-gray-800 bg-opacity-75 py-2 px-4 text-white">
-                    <p>{{ $images->judulFoto}}</p>
+                    <p class="text-[12px]">{{ $images->judulFoto}}</p>
                     <p class="text-sm font-semibold">{{ $images->user->namalengkap }}</p> <!-- Menampilkan nama profil pengguna -->
                 </div>
             </span>

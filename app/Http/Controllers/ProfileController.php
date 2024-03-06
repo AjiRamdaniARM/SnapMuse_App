@@ -88,19 +88,37 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-        $user_id = Auth::id();
+        $user_id = $user->id;
+
         Auth::logout();
 
         $user->delete();
+        $data = Foto::where('id', $user_id)->first();
 
-        $data = Foto::where('id',$user_id)->first();
-        $data2 = potoProfile::where('id',$user_id)->first();
-        File::delete(public_path('image').'/'.$data->lokasiFile);
-        File::delete(public_path('profilePoto').'/'.$data2->potoProfile);
-        Foto::where('id', $user_id)->delete();
-        potoProfile::where('id', $user_id)->delete();
-        Komentarfoto::where('id', $user_id)->delete();
-        Likefoto::where('id', $user_id)->delete();
+
+        if ($data) {
+            $filePath = public_path('image') . '/' . $data->lokasiFile;
+
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+            $data->delete();
+        }
+
+        $userProfile = potoProfile::where('id', $user_id)->first();
+        if ($userProfile) {
+            $filePath = public_path('profilePoto') . '/' . $userProfile->potoProfile;
+
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+            $userProfile->delete();
+        }
+        // File::delete(public_path('image').'/'.$data->lokasiFile);
+        Foto::whereIn('id', $user)->delete();
+        potoProfile::whereIn('id', $user)->delete();
+        Komentarfoto::whereIn('id', $user)->delete();
+        Likefoto::whereIn('id', $user)->delete();
 
 
         $request->session()->invalidate();

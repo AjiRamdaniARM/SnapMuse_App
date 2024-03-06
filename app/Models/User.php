@@ -17,6 +17,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     public function user()
+     {
+         return $this->belongsTo(User::class, 'id');
+     }
+
     protected $fillable = [
         'username',
         'password',

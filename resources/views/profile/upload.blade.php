@@ -15,7 +15,8 @@
       @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-{{-- navbar desktop --}}
+
+{{-- === navbar desktop === --}}
 <nav class="flex justify-around items-center py-10">
     <a href="/">
     <div class="logo flex items-center justify-center gap-5">
@@ -37,7 +38,10 @@
     </nav>
 </div>
 {{-- akhir navbar --}}
-
+<div class="bg-red-100 lg:w-[50em] w-[20em] mx-auto border border-red-400 text-red-700 px-8 py-3 rounded relative" role="alert">
+    <strong class="font-bold">Warning!</strong>
+    <span class="block sm:inline">It is forbidden to upload images that are strange and not worth showing</span>
+  </div>
 {{-- content --}}
 <div class="relative min-h-screen flex flex-wrap gap-10  justify-center  py-12 px-4 sm:px-6 lg:px-8  bg-no-repeat bg-cover items-start">
     {{-- card upload image --}}
@@ -51,16 +55,16 @@
         <form action="{{ route('upload')}}" method="POST"  enctype="multipart/form-data">
             @csrf
                     <div class="grid grid-cols-1 space-y-2">
-                        <label class="text-sm font-bold text-gray-500 tracking-wide">Judul gambar</label>
+                        <label class="text-sm font-bold text-gray-500 tracking-wide">Title Image</label>
                         <input class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" name="judulFoto" type="text" id="judulFoto" required >
                     </div>
                     <div class="grid grid-cols-1 space-y-2">
-                        <label class="text-sm font-bold text-gray-500 tracking-wide">Deskripsi gambar</label>
+                        <label class="text-sm font-bold text-gray-500 tracking-wide">Description Image</label>
                         <textarea class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500" name="deskripsiFoto" required></textarea>
 
                     </div>
                     <div class="grid grid-cols-1 space-y-2">
-                        <label class="text-sm font-bold text-gray-500 tracking-wide">Category gambar</label>
+                        <label class="text-sm font-bold text-gray-500 tracking-wide">Category Image</label>
                         <select name="categoryID" class="rounded-lg border-gray-300" required>
                             @foreach($dataCategory as $record)
                             <option value="{{$record->categoryName }}">{{$record->categoryName}}</option>
@@ -68,7 +72,7 @@
                         </select>
                         <input type="text" value="{{$user->id}}" name="id" hidden>
                         <div class="grid grid-cols-1 space-y-2">
-                            <label class="text-sm font-bold text-gray-500 tracking-wide">Masukkan Gambar</label>
+                            <label class="text-sm font-bold text-gray-500 tracking-wide">Insert Image</label>
                             <div class="flex items-center justify-center w-full">
                                 <label class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
                                      <div class="h-full w-full text-center flex flex-col items-center justify-center ">
@@ -156,27 +160,18 @@
 </div>
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script><lottie-player src="https://lottie.host/346b73c4-54bd-42b4-96bb-b7721628c0a3/RCQjaZUlqC.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px" loop  autoplay direction="1" mode="normal"></lottie-player></div>
 
+<script>
+      var inputElement = document.getElementById('imageInput');
 
-
-
-
-    {{-- akhir card upload --}}
-
-
-
-    {{-- preview content --}}
-
-
-
-<style>
-	.has-mask {
-		position: absolute;
-		clip: rect(10px, 150px, 130px, 10px);
-	}
-</style>
-
-
-
+// Menambahkan event listener untuk "change" event
+inputElement.addEventListener('change', function() {
+    // Memeriksa apakah file telah dipilih
+    if (inputElement.files.length > 0) {
+        // Menampilkan alert jika file telah dipilih
+        alert('It is forbidden to upload images that are strange and not worth showing' + inputElement.files[0].name);
+    }
+});
+</script>
 
 </body>
 </html>

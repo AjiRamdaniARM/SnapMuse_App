@@ -71,7 +71,7 @@
               <div class="hidden md:block">
                 <h1 class="font-semibold">{{'@'.$data->username}}</h1>
                 <span class="bioclass">{{$data->alamat}}</span>
-                <p>Welcome to {{$data->namalengkap}}'s profile. Hope you find useful and inspiring information here. Feel free to explore and get to know more about {{$data->namalengkap}}. Thank you for visiting!🖖🖖</p>
+                <p>Welcome to {{$data->namalengkap}}Hallo saya sebagai photo greper{{$data->namalengkap}}. Thank you for visiting!🖖🖖</p>
                 <span><strong>www.SnaptMuse.com</strong></span>
               </div>
 

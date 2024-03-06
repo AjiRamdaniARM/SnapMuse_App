@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="content-poto lg:py-0 py-2">
-                    <img src="{{asset('assets/image/astronot.png')}}" class="w-96" alt="astronot">
+                    <img src="http://img3.wikia.nocookie.net/__cb20130609012318/pixar/images/4/43/Lotso_006.jpg" class="w-96" alt="astronot">
                 </div>
             </div>
         </section>

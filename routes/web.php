@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\apiController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DetailController;
@@ -33,6 +34,9 @@ Route::get('/detailImage/{fotoID}/{id}',[DetailController::class, 'index'])->nam
 Route::get('/profileUser/{id}',[DetailController::class, 'profileUser'])->name('det');
 Route::get('detailImage/{lokasiFile}', [DetailController::class, 'unduh'])->name('detailImage.unduh');
 
+
+// === akses admin === //
+Route::get('/admin',[AdminController::class, 'admin'])->name('admin');
 
 // === AUTH LOGIN & REGISTER ===
 Route::middleware('auth')->group(function () {
